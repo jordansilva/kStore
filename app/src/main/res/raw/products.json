@@ -1,0 +1,200 @@
+{
+	"products": [
+		{
+			"id": "1",
+			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0462849_PE608354_S4.JPG",
+			"info": {
+				"color": "white",
+				"material": "wood with cover"
+			},
+			"name": "Henriksdal",
+			"price": {
+				"currency": "kr",
+				"value": 499
+			},
+			"type": "chair"
+		},
+		{
+			"id": "2",
+			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0667779_PE714073_S4.JPG",
+			"info": {
+				"color": "beige",
+				"numberOfSeats": 4
+			},
+			"name": "Lidhult",
+			"price": {
+				"currency": "kr",
+				"value": 1035
+			},
+			"type": "couch"
+		},
+		{
+			"id": "3",
+			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0556706_PE660542_S4.JPG",
+			"info": {
+				"color": "gray",
+				"numberOfSeats": 3
+			},
+			"name": "Nyhamn",
+			"price": {
+				"currency": "kr",
+				"value": 3395
+			},
+			"type": "couch"
+		},
+		{
+			"id": "4",
+			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0320948_PE514802_S4.JPG",
+			"info": {
+				"color": "black",
+				"numberOfSeats": 2
+			},
+			"name": "Landskrona",
+			"price": {
+				"currency": "kr",
+				"value": 7495
+			},
+			"type": "couch"
+		},
+		{
+			"id": "5",
+			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0727322_PE735594_S4.JPG",
+			"info": {
+				"color": "dark blue",
+				"material": "plastic"
+			},
+			"name": "Odger",
+			"price": {
+				"currency": "kr",
+				"value": 695.20
+			},
+			"type": "chair"
+		},
+		{
+			"id": "6",
+			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0630092_PE694645_S4.JPG",
+			"info": {
+				"color": "black",
+				"numberOfSeats": 5
+			},
+			"name": "Landskrona",
+			"price": {
+				"currency": "kr",
+				"value": 14396
+			},
+			"type": "couch"
+		},
+		{
+			"id": "7",
+			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0655887_PE709150_S4.JPG",
+			"info": {
+				"color": "multi",
+				"numberOfSeats": 2
+			},
+			"name": "Klippan",
+			"price": {
+				"currency": "kr",
+				"value": 1995
+			},
+			"type": "couch"
+		},
+		{
+			"id": "8",
+			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0724693_PE734575_S4.JPG",
+			"info": {
+				"color": "black",
+				"material": "wood and metal"
+			},
+			"name": "Kullaberg",
+			"price": {
+				"currency": "kr",
+				"value": 499
+			},
+			"type": "chair"
+		},
+		{
+			"id": "9",
+			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0617825_PE688232_S4.JPG",
+			"info": {
+				"color": "flanell",
+				"numberOfSeats": 3
+			},
+			"name": "Stocksund",
+			"price": {
+				"currency": "kr",
+				"value": 4995
+			},
+			"type": "couch"
+		},
+		{
+			"id": "10",
+			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0154688_PE312833_S4.JPG",
+			"info": {
+				"color": "black",
+				"material": "wood"
+			},
+			"name": "IKEA PS 2012",
+			"price": {
+				"currency": "kr",
+				"value": 495
+			},
+			"type": "chair"
+		},
+		{
+			"id": "11",
+			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0728320_PE736188_S4.JPG",
+			"info": {
+				"color": "black",
+				"material": "wood with cover"
+			},
+			"name": "Henriksdal",
+			"price": {
+				"currency": "kr",
+				"value": 1195
+			},
+			"type": "chair"
+		},
+		{
+			"id": "12",
+			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0579780_PE669907_S4.JPG",
+			"info": {
+				"color": "wood",
+				"material": "wood"
+			},
+			"name": "Industriell",
+			"price": {
+				"currency": "kr",
+				"value": 499
+			},
+			"type": "chair"
+		},
+		{
+			"id": "13",
+			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0728156_PE736116_S4.JPG",
+			"info": {
+				"color": "white",
+				"material": "plastic"
+			},
+			"name": "Janinge",
+			"price": {
+				"currency": "kr",
+				"value": 395
+			},
+			"type": "chair"
+		},
+		{
+			"id": "14",
+			"imageUrl": "https://shop.static.ingka.ikea.com/PIAimages/0619738_PE689282_S4.JPG",
+			"info": {
+				"color": "multi",
+				"numberOfSeats": 3
+			},
+			"name": "Ektorp",
+			"price": {
+				"currency": "kr",
+				"value": 4495
+			},
+			"type": "couch"
+		}
+	]
+}
