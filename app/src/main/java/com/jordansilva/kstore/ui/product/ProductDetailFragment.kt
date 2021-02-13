@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.jordansilva.kstore.R
-import com.jordansilva.kstore.ui.ViewModelFactoryProducer
 import com.jordansilva.kstore.ui.model.ProductViewData
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * A fragment representing a list of Items.
@@ -26,7 +25,7 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
         }
     }
 
-    private val viewModel by viewModels<ProductDetailViewModel>(factoryProducer = { ViewModelFactoryProducer(requireContext()) })
+    private val viewModel: ProductDetailViewModel by viewModel()
     private var product: ProductViewData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
