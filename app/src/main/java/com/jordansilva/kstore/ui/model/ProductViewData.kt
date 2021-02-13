@@ -5,10 +5,10 @@ import com.jordansilva.kstore.domain.model.Product
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ProductViewData(val id: String, val name: String, val type: String): Parcelable {
+data class ProductViewData(val id: String, val name: String, val type: String, val image: String?) : Parcelable {
     companion object {
         fun fromProduct(source: Product): ProductViewData {
-            return ProductViewData(source.id, source.name, source.type)
+            return ProductViewData(source.id, source.name, source.type, source.image)
         }
     }
 

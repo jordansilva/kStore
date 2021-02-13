@@ -13,7 +13,7 @@ object ProductMapper {
             name = source.getString("name"),
             type = source.getString("type"),
             price = toPrice(source.getJSONObject("price")),
-            image = source.getStringOrNull("image"),
+            image = source.getStringOrNull("imageUrl"),
             info = toInfo(source.getJSONObject("info"))
         )
     }

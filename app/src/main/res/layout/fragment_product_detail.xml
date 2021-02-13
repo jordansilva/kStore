@@ -5,9 +5,33 @@
     android:layout_height="match_parent"
     tools:context=".ui.product.ProductDetailFragment">
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin" />
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="180dp" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin" />
+
+        <TextView
+            android:id="@+id/info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin" />
+
+        <Button
+            android:id="@+id/addToBasket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_to_basket" />
+    </LinearLayout>
+
 </androidx.core.widget.NestedScrollView>
