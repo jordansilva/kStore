@@ -2,10 +2,9 @@ package com.jordansilva.kstore.ui.product
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.jordansilva.kstore.R
 import com.jordansilva.kstore.ui.ViewModelFactoryProducer
 import com.jordansilva.kstore.ui.model.ProductViewData
@@ -16,14 +15,35 @@ import com.jordansilva.kstore.ui.model.ProductViewData
 class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
 
     companion object {
-        fun newInstance() = ProductDetailFragment()
+        val TAG: String = ProductDetailFragment::class.java.simpleName
+
+        private const val ARG_ITEM = "product_item"
+
+        fun newInstance(item: ProductViewData) = ProductDetailFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(ARG_ITEM, item)
+            }
+        }
     }
 
     private val viewModel by viewModels<ProductDetailViewModel>(factoryProducer = { ViewModelFactoryProducer(requireContext()) })
+    private var product: ProductViewData? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        arguments?.let { product = it.getParcelable(ARG_ITEM) }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initUI(view)
     }
 
+    private fun initUI(view: View) {
+        val txtName = view.findViewById<TextView>(R.id.name)
+        txtName.text = product?.name
+    }
 
 }
