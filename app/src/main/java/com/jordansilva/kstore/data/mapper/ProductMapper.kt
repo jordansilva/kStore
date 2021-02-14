@@ -18,9 +18,9 @@ object ProductMapper {
         )
     }
 
-    private fun toInfo(source: JSONObject): Map<String, Any> {
-        val hashMap = mutableMapOf<String, Any>()
-        source.keys().forEach { hashMap[it] = source[it] }
+    private fun toInfo(source: JSONObject): Map<String, String> {
+        val hashMap = mutableMapOf<String, String>()
+        source.keys().forEach { hashMap[it] = source[it].toString() }
         return hashMap
     }
 

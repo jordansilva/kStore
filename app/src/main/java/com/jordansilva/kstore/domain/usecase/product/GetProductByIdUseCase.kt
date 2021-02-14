@@ -8,7 +8,7 @@ class GetProductByIdUseCase(private val repository: ProductsRepository) {
     fun execute(id: String): GetProductByIdResult {
         return try {
             val product = repository.getProduct(id)
-            GetProductByIdResult.Found(product)
+            return product?.let { GetProductByIdResult.Found(product) } ?: GetProductByIdResult.NotFound
         } catch (e: Throwable) {
             GetProductByIdResult.NotFound
         }

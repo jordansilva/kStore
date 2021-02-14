@@ -3,12 +3,16 @@ package com.jordansilva.kstore.ui.product
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jordansilva.kstore.domain.model.Product
+import com.jordansilva.kstore.domain.usecase.cart.AddProductToCartUseCase
 import com.jordansilva.kstore.domain.usecase.product.GetProductByIdUseCase
 import com.jordansilva.kstore.domain.usecase.product.GetProductByIdUseCase.GetProductByIdResult
 import com.jordansilva.kstore.ui.BaseViewModel
 import com.jordansilva.kstore.ui.model.ProductViewData
 
-class ProductDetailViewModel(private val getProductByIdUseCase: GetProductByIdUseCase) : BaseViewModel() {
+class ProductDetailViewModel(
+    private val getProductByIdUseCase: GetProductByIdUseCase,
+    private val addProductToCartUseCase: AddProductToCartUseCase
+) : BaseViewModel() {
 
     private val _loading = MutableLiveData(true)
     val loading: LiveData<Boolean> = _loading
@@ -16,13 +20,20 @@ class ProductDetailViewModel(private val getProductByIdUseCase: GetProductByIdUs
     private val _product = MutableLiveData<ProductDetailViewState>()
     val product: LiveData<ProductDetailViewState> = _product
 
-    private fun getProductById(id: String) {
+    fun getProductById(id: String) {
         launch {
             when (val result = getProductByIdUseCase.execute(id)) {
                 is GetProductByIdResult.Found -> handleProductFound(result.data)
                 is GetProductByIdResult.NotFound -> handleProductNotFound()
             }
         }.invokeOnCompletion { _loading.postValue(false) }
+    }
+
+    fun addProductToBasket(id: String) {
+        launch {
+            val state = if (addProductToCartUseCase.execute(id)) ProductDetailViewState.AddedToCart else ProductDetailViewState.NotAddedToCart
+            _product.postValue(state)
+        }
     }
 
     private fun handleProductFound(data: Product) {
@@ -32,7 +43,7 @@ class ProductDetailViewModel(private val getProductByIdUseCase: GetProductByIdUs
     }
 
     private fun handleProductNotFound() {
-        _product.postValue(ProductDetailViewState.NoProductFound)
+        _product.postValue(ProductDetailViewState.NotFound)
     }
 }
 

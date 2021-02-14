@@ -15,8 +15,9 @@ class ProductsRepositoryImpl(private val remoteDataSource: ProductsRemoteDataSou
         return result.map(ProductMapper::fromJsonObject)
     }
 
-    override fun getProduct(id: String): Product {
-        return Product(id, "Product X", "Category", Product.Price(BigDecimal.ZERO, "brl"))
+    //TODO: Fix this
+    override fun getProduct(id: String): Product? {
+        return listAllProducts().firstOrNull { it.id == id }
     }
 }
 

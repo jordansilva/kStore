@@ -4,5 +4,5 @@ import com.jordansilva.kstore.domain.model.Product
 
 interface ProductsRepository {
     fun listAllProducts(): List<Product>
-    fun getProduct(id: String): Product
+    fun getProduct(id: String): Product?
 }

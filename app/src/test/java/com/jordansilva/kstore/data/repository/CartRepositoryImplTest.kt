@@ -22,48 +22,34 @@ class CartRepositoryImplTest {
         repository = CartRepositoryImpl(productsRepository)
     }
 
-    @Test
-    fun getCart() {
-        var cart = repository.getCart()
-        assertThat(cart.products).isEmpty()
-
-        cart = repository.addProduct("A")
-        assertThat(cart.products).isNotEmpty()
-
-        repository.addProduct("B")
-        repository.addProduct("C")
-        repository.addProduct("D")
-        cart = repository.addProduct("D")
-        assertThat(cart.products).hasSize(5)
-
-        cart = repository.removeProduct("D")
-        assertThat(cart.products).hasSize(3)
-
-        cart = repository.removeProduct("D")
-        assertThat(cart.products).hasSize(3)
-
-        cart = repository.removeProduct("A")
-        assertThat(cart.products).hasSize(2)
-    }
+    private val productsInCart get() = repository.getCart().products
 
     @Test
-    fun addProduct() {
-        val cart = repository.addProduct("A")
-        assertThat(cart.products).hasSize(1)
+    fun `when add a product to the shopping cart, the amount of products in the cart must increase`() {
+        assertThat(productsInCart).isEmpty()
+
+        val isAdded = repository.addProduct("A")
+        assertThat(isAdded).isTrue()
 
         val expectedProduct = productsRepository.getProduct("A")
-        assertThat(cart.products[0]).isEqualTo(expectedProduct)
+        assertThat(productsInCart[0]).isEqualTo(expectedProduct)
     }
 
     @Test
-    fun removeProduct() {
-        var cart = repository.addProduct("B")
-        assertThat(cart.products).hasSize(1)
+    fun `when remove a product from the shopping cart, the amount of products in the cart must reduce`() {
+        repository.addProduct("A")
+        assertThat(productsInCart).hasSize(1)
 
-        cart = repository.removeProduct("A")
-        assertThat(cart.products).hasSize(1)
+        repository.removeProduct("A")
+        assertThat(productsInCart).isEmpty()
+    }
 
-        cart = repository.removeProduct("B")
-        assertThat(cart.products).isEmpty()
+    @Test
+    fun `when remove an invalid product from the shopping cart, the amount of products in the cart should not change`() {
+        repository.addProduct("A")
+        assertThat(productsInCart).hasSize(1)
+
+        repository.removeProduct("X")
+        assertThat(productsInCart).hasSize(1)
     }
 }

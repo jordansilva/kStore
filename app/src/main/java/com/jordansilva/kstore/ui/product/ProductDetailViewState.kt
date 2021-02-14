@@ -4,5 +4,7 @@ import com.jordansilva.kstore.ui.model.ProductViewData
 
 sealed class ProductDetailViewState {
     data class ProductDetail(val data: ProductViewData) : ProductDetailViewState()
-    object NoProductFound : ProductDetailViewState()
+    object NotFound : ProductDetailViewState()
+    object AddedToCart : ProductDetailViewState()
+    object NotAddedToCart: ProductDetailViewState()
 }

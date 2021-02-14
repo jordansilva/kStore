@@ -2,6 +2,7 @@ package com.jordansilva.kstore.data.repository
 
 import com.google.common.truth.Truth.assertThat
 import com.jordansilva.kstore.domain.model.Product
+import org.json.JSONArray
 import org.junit.Before
 import org.junit.Test
 import java.math.BigDecimal
@@ -10,10 +11,14 @@ import java.math.BigDecimal
 class ProductsRepositoryImplTest {
 
     private lateinit var repository: ProductsRepositoryImpl
+    private lateinit var remoteDataSource: ProductsRemoteDataSource
 
     @Before
     fun setUp() {
-        repository = ProductsRepositoryImpl()
+        remoteDataSource = object : ProductsRemoteDataSource {
+            override fun fetchProducts(): JSONArray = JSONArray()
+        }
+        repository = ProductsRepositoryImpl(remoteDataSource)
     }
 
     @Test
