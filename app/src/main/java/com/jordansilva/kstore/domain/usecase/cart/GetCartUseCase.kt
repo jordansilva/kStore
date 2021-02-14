@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.SharedFlow
 class GetCartUseCase(private val repository: CartRepository) {
 
     fun execute(): SharedFlow<Cart> {
-        return repository.observeCart()
+        return repository.getCart()
     }
 }

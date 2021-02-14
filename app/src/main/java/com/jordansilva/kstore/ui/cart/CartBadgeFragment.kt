@@ -8,13 +8,11 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import com.jordansilva.kstore.R
-import kotlinx.coroutines.flow.collect
+import com.jordansilva.kstore.ui.helper.navigateTo
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
@@ -24,17 +22,17 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class CartBadgeFragment : Fragment() {
     private val viewModel: CartViewModel by sharedViewModel()
     private var itemBadge: TextView? = null
-    private val cartViewStateObserver: Observer<in CartViewState> = Observer { handleViewState(it) }
+    private val observer: Observer<in Int> = Observer { updateShoppingCart(it) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        viewModel.viewState.observeForever(cartViewStateObserver)
+        viewModel.quantityItems.observeForever(observer)
         return null
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        viewModel.viewState.removeObserver(cartViewStateObserver)
+        viewModel.quantityItems.removeObserver(observer)
         itemBadge = null
     }
 
@@ -43,7 +41,7 @@ class CartBadgeFragment : Fragment() {
         val menuItem = menu.findItem(R.id.shopping_cart)
         menuItem.actionView?.setOnClickListener { openShoppingCart() }
         itemBadge = menuItem.actionView.findViewById(R.id.cart_badge)
-        viewModel.viewState.value?.let { handleViewState(it) }
+        viewModel.quantityItems.value?.let { updateShoppingCart(it) }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -54,14 +52,8 @@ class CartBadgeFragment : Fragment() {
         return true
     }
 
-    private fun handleViewState(viewState: CartViewState) {
-        when (viewState) {
-            is CartViewState.ItemsChanged -> updateShoppingCart(viewState.quantity)
-        }
-    }
-
     private fun openShoppingCart() {
-        Toast.makeText(requireContext(), "Open Shopping Cart", Toast.LENGTH_SHORT).show()
+        navigateTo(CartFragment.newInstance(), CartFragment.TAG)
     }
 
     private fun updateShoppingCart(quantity: Int) {

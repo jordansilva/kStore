@@ -3,40 +3,36 @@ package com.jordansilva.kstore.data.repository
 import com.jordansilva.kstore.domain.model.Cart
 import com.jordansilva.kstore.domain.repository.CartRepository
 import com.jordansilva.kstore.domain.repository.ProductsRepository
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.asStateFlow
 
 class CartRepositoryImpl(private val productsRepository: ProductsRepository) : CartRepository {
 
-    private val _cart = MutableSharedFlow<Cart>(1)
-    val cart: SharedFlow<Cart> = _cart.asSharedFlow()
+    private val cart = Cart()
+    private val _cartFlow = MutableSharedFlow<Cart>(1)
+    private val _cartQuantityFlow = MutableStateFlow(0)
 
     init {
-        _cart.tryEmit(Cart())
+        _cartFlow.tryEmit(cart)
     }
 
-    override fun getCart(): Cart {
-        return cart.replayCache.last()
-    }
-
-    override fun observeCart() = cart
+    override fun getCart() = _cartFlow.asSharedFlow()
+    override fun cartQuantity() = _cartQuantityFlow.asStateFlow()
 
     override fun addProduct(id: String): Boolean {
-        val newCart = getCart()
         val product = productsRepository.getProduct(id) ?: return false
-        newCart.add(product)
-        android.util.Log.d("Cart", "isEqual ${newCart == cart.replayCache.last()}")
-        GlobalScope.launch { _cart.emit(newCart) }
+        cart.add(product)
+        _cartFlow.tryEmit(cart)
+        _cartQuantityFlow.tryEmit(cart.quantityItems())
         return true
     }
 
     override fun removeProduct(id: String): Boolean {
-        val newCart = getCart()
-        newCart.remove(id)
-        GlobalScope.launch { _cart.emit(newCart) }
+        cart.remove(id)
+        _cartFlow.tryEmit(cart)
+        _cartQuantityFlow.tryEmit(cart.quantityItems())
         return true
 
     }

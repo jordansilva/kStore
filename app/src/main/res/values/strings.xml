@@ -12,4 +12,7 @@
     <string name="product_image">Image of the product</string>
     <string name="best_furniture">Best Furniture</string>
     <string name="perfect_choice">Perfect choice!</string>
+    <string name="your_cart">Your Cart</string>
+    <string name="quantity_minus">-</string>
+    <string name="quantity_plus">+</string>
 </resources>

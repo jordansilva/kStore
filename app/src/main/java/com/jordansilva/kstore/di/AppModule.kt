@@ -8,6 +8,7 @@ import com.jordansilva.kstore.data.repository.ProductsRepositoryImpl
 import com.jordansilva.kstore.domain.repository.CartRepository
 import com.jordansilva.kstore.domain.repository.ProductsRepository
 import com.jordansilva.kstore.domain.usecase.cart.AddProductToCartUseCase
+import com.jordansilva.kstore.domain.usecase.cart.GetCartQuantityUseCase
 import com.jordansilva.kstore.domain.usecase.cart.GetCartUseCase
 import com.jordansilva.kstore.domain.usecase.cart.RemoveProductFromCartUseCase
 import com.jordansilva.kstore.domain.usecase.product.GetProductByIdUseCase
@@ -21,7 +22,14 @@ import org.koin.dsl.module
 
 val appModule = module {
     viewModel { HomeViewModel(listProductsUseCase = get()) }
-    viewModel { CartViewModel(getCartUseCase = get(), addProductToCartUseCase = get(), removeProductFromCartUseCase = get()) }
+    viewModel {
+        CartViewModel(
+            getCartUseCase = get(),
+            getCartQuantityUseCase = get(),
+            addProductToCartUseCase = get(),
+            removeProductFromCartUseCase = get()
+        )
+    }
     viewModel {
         ProductDetailViewModel(
             getProductByIdUseCase = get(),
@@ -37,6 +45,7 @@ val domainModule = module {
 
     //Cart
     factory { GetCartUseCase(repository = get()) }
+    factory { GetCartQuantityUseCase(repository = get()) }
     factory { AddProductToCartUseCase(repository = get()) }
     factory { RemoveProductFromCartUseCase(repository = get()) }
 }

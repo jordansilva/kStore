@@ -1,8 +1,12 @@
-package com.jordansilva.kstore.data.repository
+package com.jordansilva.kstore.unit.data.repository
 
 import com.google.common.truth.Truth.assertThat
+import com.jordansilva.kstore.data.repository.CartRepositoryImpl
+import com.jordansilva.kstore.domain.model.Cart
 import com.jordansilva.kstore.domain.model.Product
 import com.jordansilva.kstore.domain.repository.ProductsRepository
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import java.math.BigDecimal
@@ -22,16 +26,18 @@ class CartRepositoryImplTest {
         repository = CartRepositoryImpl(productsRepository)
     }
 
-    private val productsInCart get() = repository.getCart().products
+    private val productsInCart get() = runBlocking { repository.getCart().first().products }
 
     @Test
     fun `when add a product to the shopping cart, the amount of products in the cart must increase`() {
+        val sut = CartRepositoryImpl(productsRepository)
         assertThat(productsInCart).isEmpty()
 
         val isAdded = repository.addProduct("A")
         assertThat(isAdded).isTrue()
 
-        val expectedProduct = productsRepository.getProduct("A")
+        val product = productsRepository.getProduct("A")!!
+        val expectedProduct = Cart.CartProduct(product.id, product.price.currency, product.price.value, 1)
         assertThat(productsInCart[0]).isEqualTo(expectedProduct)
     }
 

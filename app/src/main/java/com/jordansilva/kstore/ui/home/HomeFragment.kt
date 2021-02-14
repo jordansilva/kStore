@@ -5,13 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.transition.ChangeBounds
-import androidx.transition.ChangeImageTransform
-import androidx.transition.ChangeTransform
-import androidx.transition.TransitionSet
 import com.jordansilva.kstore.R
 import com.jordansilva.kstore.databinding.FragmentHomeBinding
+import com.jordansilva.kstore.ui.helper.FragmentTransitions
+import com.jordansilva.kstore.ui.helper.navigateTo
 import com.jordansilva.kstore.ui.model.ProductViewData
 import com.jordansilva.kstore.ui.product.ProductDetailFragment
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -50,26 +47,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     //TODO: Move to Navigator Component or move this to the activity
     private fun onProductClicked(item: ProductViewData, view: View) {
-        parentFragmentManager.commit {
-//            val imageView = view.findViewById<View>(R.id.image)
-            setReorderingAllowed(true)
-            val transitionName = view.transitionName
-            val fragment = ProductDetailFragment.newInstance(item, transitionName)
-            fragment.sharedElementEnterTransition = getTransition()
-            fragment.sharedElementReturnTransition = getTransition()
-            addSharedElement(view, transitionName)
-            replace(R.id.container, fragment, ProductDetailFragment.TAG)
-            addToBackStack(null)
-        }
-    }
+        val transitionName = view.transitionName
+        val fragment = ProductDetailFragment.newInstance(item, transitionName)
+        fragment.sharedElementEnterTransition = FragmentTransitions.getTransition()
+        fragment.sharedElementReturnTransition = FragmentTransitions.getTransition()
 
-    private fun getTransition(): TransitionSet {
-        return TransitionSet().apply {
-            ordering = TransitionSet.ORDERING_TOGETHER
-            addTransition(ChangeBounds())
-            addTransition(ChangeImageTransform())
-            addTransition(ChangeTransform())
-        }
+        val sharedElements = listOf(Pair(view, transitionName))
+        navigateTo(fragment, ProductDetailFragment.TAG, sharedElements)
     }
 
     companion object {

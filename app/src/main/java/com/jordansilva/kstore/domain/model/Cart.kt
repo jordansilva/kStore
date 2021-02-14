@@ -1,21 +1,33 @@
 package com.jordansilva.kstore.domain.model
 
-class Cart {
-    private val _products: MutableList<Product> = mutableListOf()
-    val products: List<Product> get() = _products
+import java.math.BigDecimal
 
-    fun add(item: Product) { _products.add(item) }
-    fun remove(id: String) { _products.removeAll { it.id == id } }
-    fun total() = products.sumOf { it.price.value }
+data class Cart(private val _products: MutableMap<String, CartProduct> = mutableMapOf()) {
 
-    override fun equals(other: Any?): Boolean {
-        if (other !is Cart) return false
-        if (this === other) return true
+    val products get() = _products.values.toList()
 
-        return super.equals(other)
+    data class CartProduct(val id: String, val currency: String, val price: BigDecimal, var quantity: Int) {
+        fun totalPrice() = price.times(quantity.toBigDecimal())
     }
 
-    override fun hashCode(): Int {
-        return _products.hashCode()
+    fun add(item: Product) {
+        val product = _products[item.id] ?: CartProduct(item.id, item.price.currency, item.price.value, 0)
+        product.quantity += 1
+        _products[product.id] = product
     }
+
+    fun remove(id: String) {
+        _products[id]?.let { product ->
+            product.quantity -= 1
+            if (product.quantity > 0) {
+                _products[product.id] = product
+            } else {
+                _products.remove(product.id)
+            }
+        }
+    }
+
+    fun removeAll(id: String) = _products.remove(id)
+    fun quantityItems() = _products.values.sumOf { it.quantity }
+    fun totalPrice() = _products.values.sumOf { it.totalPrice() }
 }

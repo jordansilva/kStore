@@ -1,6 +1,8 @@
-package com.jordansilva.kstore.data.repository
+package com.jordansilva.kstore.unit.data.repository
 
 import com.google.common.truth.Truth.assertThat
+import com.jordansilva.kstore.data.repository.ProductsRemoteDataSource
+import com.jordansilva.kstore.data.repository.ProductsRepositoryImpl
 import com.jordansilva.kstore.domain.model.Product
 import org.json.JSONArray
 import org.junit.Before

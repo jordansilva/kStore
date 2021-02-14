@@ -5,7 +5,6 @@ import com.jordansilva.kstore.domain.model.Product
 import com.jordansilva.kstore.domain.repository.ProductsRepository
 import com.jordansilva.kstore.util.map
 import org.json.JSONArray
-import java.math.BigDecimal
 
 class ProductsRepositoryImpl(private val remoteDataSource: ProductsRemoteDataSource) : ProductsRepository {
 
