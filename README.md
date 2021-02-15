@@ -7,6 +7,7 @@ In this project, I tried to apply concepts from Clean Architecture to build an e
 Pitfalls & Known bugs
 --------
 Due to the constraint of work only 2 days on this project, I have to do some considerations of what I left out:
+- Toast product added to your cart is showing when going back from Shopping cart to Product page again. (Fragment observes LiveData again and it emits the last value. It could be solved with SingleLiveEvent for example.)
 - Tests are not covering all View Models and Views. To compensate and mitigate possible issues, I implemented two UI tests end to end. 
 - Improve overall the design.
 - All products retrieved should have the same currency right now, otherwise it will sum different prices in currencies.
