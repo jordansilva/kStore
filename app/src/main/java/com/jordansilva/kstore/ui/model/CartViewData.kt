@@ -1,33 +1,40 @@
 package com.jordansilva.kstore.ui.model
 
 import com.jordansilva.kstore.domain.model.Cart
-import java.math.BigDecimal
+import com.jordansilva.kstore.domain.model.CartItem
+import com.jordansilva.kstore.util.MoneyHelper
 
 data class CartViewData(
     val products: List<CartProductViewData>,
     val quantityItems: Int,
-    val totalPrice: BigDecimal
+    val totalPrice: String
 ) {
     data class CartProductViewData(
         val id: String,
         val name: String,
         var quantity: Int,
-        val price: BigDecimal,
-        val currency: String,
+        val price: String,
         val image: String? = null
-    ) {
-        companion object {
-            fun fromCartProduct(source: Cart.CartProduct) =
-                CartProductViewData(source.id, source.id, source.quantity, source.price, source.currency)
-        }
-    }
+    )
 
     companion object {
         fun fromCart(source: Cart): CartViewData {
+            val totalPrice = MoneyHelper.formatPrice(source.products.first().currency, source.totalPrice())
             return CartViewData(
-                products = source.products.map(CartProductViewData::fromCartProduct),
-                totalPrice = source.totalPrice(),
+                products = source.products.map(::fromCartProduct),
+                totalPrice = totalPrice,
                 quantityItems = source.quantityItems()
+            )
+        }
+
+        private fun fromCartProduct(source: CartItem): CartProductViewData {
+            val totalPrice = MoneyHelper.formatPrice(source.currency, source.totalPrice())
+            return CartProductViewData(
+                id = source.id,
+                name = source.name,
+                quantity = source.quantity,
+                price = totalPrice,
+                image = source.image
             )
         }
     }

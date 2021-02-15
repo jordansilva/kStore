@@ -1,17 +1,18 @@
 package com.jordansilva.kstore.domain.model
 
-import java.math.BigDecimal
+import java.util.Date
+import java.util.UUID
 
-data class Cart(private val _products: MutableMap<String, CartProduct> = mutableMapOf()) {
+data class Cart(
+    private val id: String = UUID.randomUUID().toString(),
+    private val _products: MutableMap<String, CartItem> = mutableMapOf(),
+    private val createdAt: Long = Date().time
+) {
 
     val products get() = _products.values.toList()
 
-    data class CartProduct(val id: String, val currency: String, val price: BigDecimal, var quantity: Int) {
-        fun totalPrice() = price.times(quantity.toBigDecimal())
-    }
-
     fun add(item: Product) {
-        val product = _products[item.id] ?: CartProduct(item.id, item.price.currency, item.price.value, 0)
+        val product = _products[item.id] ?: CartItem(item.id, item.name, item.image, 0, item.price.currency, item.price.value)
         product.quantity += 1
         _products[product.id] = product
     }

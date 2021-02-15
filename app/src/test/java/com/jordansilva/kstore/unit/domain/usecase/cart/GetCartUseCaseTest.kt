@@ -13,6 +13,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
+import java.math.BigDecimal
 
 class GetCartUseCaseTest {
 
@@ -26,9 +27,11 @@ class GetCartUseCaseTest {
     }
 
     @Test
-    fun `given an empty cart, when I start observing the cart, then it should return zero`() = runBlockingTest {
+    fun `given an empty cart, when I start observing the cart, then it should return no products in it`() = runBlockingTest {
         val cart = sut.execute().replayCache.first()
-        assertThat(cart).isEqualTo(Cart())
+        assertThat(cart.products).isEmpty()
+        assertThat(cart.totalPrice()).isEqualTo(BigDecimal.ZERO)
+        assertThat(cart.quantityItems()).isEqualTo(0)
     }
 
     @Test

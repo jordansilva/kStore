@@ -23,36 +23,38 @@ class RemoveProductFromCartUseCaseTest {
         repeat(INITIAL_QUANTITY_ITEMS) { fakeRepository.addProduct(it.toString()) }
     }
 
+    private fun cartQuantity() = fakeRepository.getCart().replayCache.first().quantityItems()
+
     @Test
     fun `given a valid product id, when I remove this product from the cart, then it should remove a product in the repository and return true`() {
-        assertThat(fakeRepository.cartQuantity().value).isEqualTo(INITIAL_QUANTITY_ITEMS)
+        assertThat(cartQuantity()).isEqualTo(INITIAL_QUANTITY_ITEMS)
 
         val validId = "1"
         assertThat(sut.execute(validId)).isTrue()
         verify(fakeRepository).removeProduct(validId)
-        assertThat(fakeRepository.cartQuantity().value).isEqualTo(INITIAL_QUANTITY_ITEMS - 1)
+        assertThat(cartQuantity()).isEqualTo(INITIAL_QUANTITY_ITEMS - 1)
     }
 
     @Test
     fun `given a valid product id, when I remove this product twice from the cart, then it should remove a single product in the repository and return true`() {
-        assertThat(fakeRepository.cartQuantity().value).isEqualTo(INITIAL_QUANTITY_ITEMS)
+        assertThat(cartQuantity()).isEqualTo(INITIAL_QUANTITY_ITEMS)
 
         val validId = "1"
         assertThat(sut.execute(validId)).isTrue()
         assertThat(sut.execute(validId)).isTrue()
 
         verify(fakeRepository, times(2)).removeProduct(validId)
-        assertThat(fakeRepository.cartQuantity().value).isEqualTo(INITIAL_QUANTITY_ITEMS - 1)
+        assertThat(cartQuantity()).isEqualTo(INITIAL_QUANTITY_ITEMS - 1)
     }
 
     @Test
     fun `given the car an invalid product id, when I remove this product from the cart, then it should remove a product in the repository and return true`() {
-        assertThat(fakeRepository.cartQuantity().value).isEqualTo(INITIAL_QUANTITY_ITEMS)
+        assertThat(cartQuantity()).isEqualTo(INITIAL_QUANTITY_ITEMS)
 
         val invalidId = "A"
         assertThat(sut.execute(invalidId)).isTrue()
         verify(fakeRepository).removeProduct(invalidId)
-        assertThat(fakeRepository.cartQuantity().value).isEqualTo(INITIAL_QUANTITY_ITEMS)
+        assertThat(cartQuantity()).isEqualTo(INITIAL_QUANTITY_ITEMS)
     }
 
     private companion object {

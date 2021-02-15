@@ -2,6 +2,7 @@ package com.jordansilva.kstore.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.jordansilva.kstore.domain.model.Product
 import com.jordansilva.kstore.domain.usecase.product.ListProductsUseCase
 import com.jordansilva.kstore.domain.usecase.product.ListProductsUseCase.ListProductsResult
 import com.jordansilva.kstore.ui.BaseViewModel
@@ -22,10 +23,14 @@ class HomeViewModel(private val listProductsUseCase: ListProductsUseCase) : Base
     private fun listProducts() {
         launch {
             when (val result = listProductsUseCase.execute()) {
-                is ListProductsResult.Products -> _products.postValue(result.data.map(ProductViewData::fromProduct))
+                is ListProductsResult.Products -> handleListProducts(result.data)
+                is ListProductsResult.Empty -> handleListProducts(emptyList())
             }
         }.invokeOnCompletion { _loading.postValue(false) }
     }
 
+    private fun handleListProducts(items: List<Product>) {
+        _products.postValue(items.map(ProductViewData::fromProduct))
+    }
 
 }

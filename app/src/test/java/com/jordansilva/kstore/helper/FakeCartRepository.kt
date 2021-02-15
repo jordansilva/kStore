@@ -22,7 +22,6 @@ open class FakeCartRepository : CartRepository {
     }
 
     override fun getCart(): SharedFlow<Cart> = cartFlow.asSharedFlow()
-    override fun cartQuantity(): StateFlow<Int> = quantity.asStateFlow()
 
     override fun addProduct(id: String): Boolean {
         val itemQuantity = products[id] ?: 0

@@ -43,6 +43,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun updateList(items: List<ProductViewData>) {
         listAdapter.submitList(items)
+        if (items.isNotEmpty() && binding.viewSwitcher.currentView.id != binding.recyclerView.id) binding.viewSwitcher.showNext()
+        if (items.isEmpty() && binding.viewSwitcher.currentView.id == binding.recyclerView.id) binding.viewSwitcher.showNext()
     }
 
     //TODO: Move to Navigator Component or move this to the activity

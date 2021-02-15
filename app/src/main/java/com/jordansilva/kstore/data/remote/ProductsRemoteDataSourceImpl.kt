@@ -1,6 +1,6 @@
 package com.jordansilva.kstore.data.remote
 
-import com.jordansilva.kstore.data.repository.ProductsRemoteDataSource
+import com.jordansilva.kstore.data.repository.datasource.ProductsRemoteDataSource
 import org.json.JSONArray
 import org.json.JSONObject
 

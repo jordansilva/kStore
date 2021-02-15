@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.jordansilva.kstore.R
 import com.jordansilva.kstore.ui.helper.navigateTo
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -22,17 +23,25 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class CartBadgeFragment : Fragment() {
     private val viewModel: CartViewModel by sharedViewModel()
     private var itemBadge: TextView? = null
-    private val observer: Observer<in Int> = Observer { updateShoppingCart(it) }
+    private val observer: Observer<in CartViewState> = Observer { handleViewState(it) }
+
+    private fun handleViewState(viewState: CartViewState) {
+        when (viewState) {
+            is CartViewState.Updated -> updateShoppingCart(viewState.cart.quantityItems)
+            is CartViewState.EmptyCart -> updateShoppingCart(0)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        viewModel.quantityItems.observeForever(observer)
+        viewModel.viewState.observe(requireActivity()) { handleViewState(it) }
+//        viewModel.viewState.observeForever(observer)
         return null
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        viewModel.quantityItems.removeObserver(observer)
+        viewModel.viewState.removeObserver(observer)
         itemBadge = null
     }
 
@@ -41,7 +50,8 @@ class CartBadgeFragment : Fragment() {
         val menuItem = menu.findItem(R.id.shopping_cart)
         menuItem.actionView?.setOnClickListener { openShoppingCart() }
         itemBadge = menuItem.actionView.findViewById(R.id.cart_badge)
-        viewModel.quantityItems.value?.let { updateShoppingCart(it) }
+        //Update the initial quantity
+        viewModel.viewState.value?.let { handleViewState(it) }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

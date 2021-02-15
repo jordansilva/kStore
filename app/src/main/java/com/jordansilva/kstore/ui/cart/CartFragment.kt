@@ -25,7 +25,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentCartBinding.inflate(inflater, container, false)
-//        setHasOptionsMenu(true)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -47,19 +47,37 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
     private fun updateViewState(viewState: CartViewState) {
         when (viewState) {
-            is CartViewState.Updated -> listAdapter.submitList(viewState.cart.products)
+            is CartViewState.Updated -> updateCart(viewState.cart)
+            is CartViewState.EmptyCart -> emptyCart()
         }
+
+        updateEmptyView()
+    }
+
+    private fun updateCart(cart: CartViewData) {
+        listAdapter.submitList(cart.products)
+        binding.total.text = cart.totalPrice
+    }
+
+    private fun emptyCart() {
+        listAdapter.submitList(emptyList())
+        binding.total.text = ""
+    }
+
+    private fun updateEmptyView() {
+        if (listAdapter.itemCount > 0 && binding.viewSwitcher.currentView.id != binding.cartView.id) binding.viewSwitcher.showNext()
+        if (listAdapter.itemCount == 0 && binding.viewSwitcher.currentView.id == binding.cartView.id) binding.viewSwitcher.showNext()
     }
 
     //TODO: Move to Navigator Component or move this to the activity
     private fun onProductClicked(item: CartViewData.CartProductViewData, view: View) {
 //        val transitionName = view.transitionName
-//        val fragment = ProductDetailFragment.newInstance(item, transitionName)
+//        val fragment =
 //        fragment.sharedElementEnterTransition = FragmentTransitions.getTransition()
 //        fragment.sharedElementReturnTransition = FragmentTransitions.getTransition()
 //
 //        val sharedElements = listOf(Pair(view, transitionName))
-//        navigateTo(fragment, ProductDetailFragment.TAG, sharedElements)
+//        navigateTo(ProductDetailFragment.newInstance(item), ProductDetailFragment.TAG, sharedElements)
     }
 
     private fun onProductQuantityChanged(item: CartViewData.CartProductViewData, quantity: Int) {

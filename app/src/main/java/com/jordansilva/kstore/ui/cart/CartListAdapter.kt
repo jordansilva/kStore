@@ -13,7 +13,6 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.jordansilva.kstore.databinding.ItemCartProductCardBinding
 import com.jordansilva.kstore.ui.model.CartViewData.CartProductViewData
-import kotlin.math.max
 
 class CartListAdapter(
     private val onItemClicked: (CartProductViewData, View) -> Unit,
@@ -36,13 +35,8 @@ class CartListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val binding = ItemCartProductCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProductViewHolder(
-            binding, { position, view -> onItemClicked(getItem(position), view) },
-            { position, quantity ->
-                val item = getItem(position)
-                onItemQuantityChanged(item, quantity)
-                item.quantity = max(0, item.quantity + quantity)
-                notifyItemChanged(position)
-            },
+            binding, { position, view -> if (position >= 0) onItemClicked(getItem(position), view) },
+            { position, quantity -> if (position >= 0) onItemQuantityChanged(getItem(position), quantity) },
         )
     }
 
@@ -66,7 +60,7 @@ class CartListAdapter(
             binding.name.text = item.name
 //            binding.type.text = item.type
             binding.quantity.text = item.quantity.toString()
-            binding.price.text = "${item.currency}${item.price}"
+            binding.price.text = item.price
 
             ViewCompat.setTransitionName(binding.image, "transition_image_${adapterPosition}")
 

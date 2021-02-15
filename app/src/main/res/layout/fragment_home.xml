@@ -25,16 +25,51 @@
             android:text="@string/perfect_choice"
             android:textSize="16sp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:name="com.jordansilva.kstore.ui.home.ItemFragment"
+        <ViewSwitcher
+            android:id="@+id/viewSwitcher"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="GridLayoutManager"
-            app:spanCount="2"
-            tools:context=".ui.home.HomeFragment"
-            tools:itemCount="50"
-            tools:listitem="@layout/item_product_card" />
+            android:layout_height="wrap_content">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:name="com.jordansilva.kstore.ui.home.ItemFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="GridLayoutManager"
+                app:spanCount="@integer/home_list_span_count"
+                tools:context=".ui.home.HomeFragment"
+                tools:itemCount="50"
+                tools:listitem="@layout/item_product_card" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animation_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/empty_cart" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/empty_list"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/animation_view" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ViewSwitcher>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

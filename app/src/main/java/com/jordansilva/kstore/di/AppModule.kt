@@ -1,14 +1,17 @@
 package com.jordansilva.kstore.di
 
+import com.jordansilva.kstore.data.local.CartDataSourceImpl
+import com.jordansilva.kstore.data.local.ProductsDataSourceImpl
 import com.jordansilva.kstore.data.remote.ProductsRemoteDataSourceImpl
 import com.jordansilva.kstore.data.remote.RawDataSource
 import com.jordansilva.kstore.data.repository.CartRepositoryImpl
-import com.jordansilva.kstore.data.repository.ProductsRemoteDataSource
+import com.jordansilva.kstore.data.repository.ProductsLocalDataSource
 import com.jordansilva.kstore.data.repository.ProductsRepositoryImpl
+import com.jordansilva.kstore.data.repository.datasource.CartDataSource
+import com.jordansilva.kstore.data.repository.datasource.ProductsRemoteDataSource
 import com.jordansilva.kstore.domain.repository.CartRepository
 import com.jordansilva.kstore.domain.repository.ProductsRepository
 import com.jordansilva.kstore.domain.usecase.cart.AddProductToCartUseCase
-import com.jordansilva.kstore.domain.usecase.cart.GetCartQuantityUseCase
 import com.jordansilva.kstore.domain.usecase.cart.GetCartUseCase
 import com.jordansilva.kstore.domain.usecase.cart.RemoveProductFromCartUseCase
 import com.jordansilva.kstore.domain.usecase.product.GetProductByIdUseCase
@@ -25,7 +28,6 @@ val appModule = module {
     viewModel {
         CartViewModel(
             getCartUseCase = get(),
-            getCartQuantityUseCase = get(),
             addProductToCartUseCase = get(),
             removeProductFromCartUseCase = get()
         )
@@ -45,7 +47,6 @@ val domainModule = module {
 
     //Cart
     factory { GetCartUseCase(repository = get()) }
-    factory { GetCartQuantityUseCase(repository = get()) }
     factory { AddProductToCartUseCase(repository = get()) }
     factory { RemoveProductFromCartUseCase(repository = get()) }
 }
@@ -53,6 +54,8 @@ val domainModule = module {
 val dataModule = module {
     single { RawDataSource(resources = androidContext().resources) }
     single<ProductsRemoteDataSource> { ProductsRemoteDataSourceImpl(rawDataSource = get()) }
-    single<ProductsRepository> { ProductsRepositoryImpl(remoteDataSource = get()) }
-    single<CartRepository> { CartRepositoryImpl(productsRepository = get()) }
+    single<ProductsRepository> { ProductsRepositoryImpl(localDataSource = get(), remoteDataSource = get()) }
+    single<CartRepository> { CartRepositoryImpl(cartDataSource = get(), productsRepository = get()) }
+    single<CartDataSource> { CartDataSourceImpl() }
+    single<ProductsLocalDataSource> { ProductsDataSourceImpl() }
 }

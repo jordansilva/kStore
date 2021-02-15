@@ -39,15 +39,14 @@ class HomeProductListAdapter(private val onItemClicked: (ProductViewData, View) 
 
     class ProductViewHolder(private val binding: ItemProductCardBinding, private val onItemClicked: (Int, View) -> Unit) : RecyclerView.ViewHolder(binding.root) {
         init {
-//            itemView.setOnClickListener { onItemClicked(adapterPosition, binding.image) }
+            itemView.setOnClickListener { onItemClicked(adapterPosition, binding.image) }
         }
 
         fun bindView(item: ProductViewData) {
             binding.name.text = item.name
             binding.type.text = item.type
-            binding.price.text = "0"
+            binding.price.text = item.price
             ViewCompat.setTransitionName(binding.image, "transition_image_${adapterPosition}")
-            itemView.setOnClickListener { onItemClicked(adapterPosition, binding.image) }
 
             item.image?.let { url ->
                 Glide.with(itemView)

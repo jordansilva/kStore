@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-parcelize'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -32,8 +33,20 @@ android {
         jvmTarget = '1.8'
     }
 
+    sourceSets {
+        test.resources.srcDirs += 'src/test/resources'
+    }
+
     buildFeatures {
         viewBinding true
+    }
+
+    testOptions {
+        animationsDisabled true
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
     }
 
 }
@@ -66,13 +79,26 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-android-ext:$koin_version"
 
+    //Lottie
+    implementation "com.airbnb.android:lottie:3.6.1"
+
+    //Implementing Room
+//    implementation("androidx.room:room-runtime:$room_version")
+//    implementation("androidx.room:room-ktx:$room_version", false)
+//    kapt "androidx.room:room-compiler:$room_version"
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+
     //Testing
     testImplementation 'junit:junit:4.13.1'
     testImplementation "com.google.truth:truth:1.1"
     testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2'
+    testImplementation 'org.mockito:mockito-core:3.5.13'
+    testImplementation 'org.json:json:20200518'
+//    testImplementation "androidx.room:room-testing:$room_version"
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2'
-    testImplementation 'org.mockito:mockito-core:3.5.13'
+
 }

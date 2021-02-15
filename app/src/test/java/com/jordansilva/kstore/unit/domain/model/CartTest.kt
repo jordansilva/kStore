@@ -21,7 +21,7 @@ class CartTest {
         sut.add(PRODUCT_A)
         sut.add(PRODUCT_B)
 
-        val expectedList = arrayOf(cartProductA(), cartProductB())
+        val expectedList = listOf(cartProductA(), cartProductB())
         assertThat(sut.products).containsExactlyElementsIn(expectedList)
     }
 

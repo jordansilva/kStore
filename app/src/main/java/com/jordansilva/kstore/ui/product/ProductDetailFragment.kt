@@ -62,7 +62,7 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
         binding.apply {
             name.text = product.name
             type.text = product.type
-            price.text = product.type
+            price.text = product.price
             addToBasket.setOnClickListener { viewModel.addProductToBasket(product.id) }
             recyclerView.setHasFixedSize(true)
             recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
