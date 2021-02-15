@@ -63,10 +63,10 @@
             android:orientation="vertical">
 
             <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/animation_view"
+                android:id="@+id/lottieAnimation"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/textView"
+                app:layout_constraintBottom_toTopOf="@+id/emptyShoppingCart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:lottie_autoPlay="true"
@@ -74,7 +74,7 @@
                 app:lottie_rawRes="@raw/empty_bag" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/emptyShoppingCart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/empty_cart"

@@ -6,12 +6,10 @@
     android:layout_height="wrap_content"
     android:layout_marginVertical="8dp"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="1dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp"
     app:cardPreventCornerOverlap="false"
-    app:cardUseCompatPadding="true"
-    app:contentPadding="@dimen/card_content_padding">
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,31 +24,40 @@
             android:scaleType="centerCrop"
             tools:src="@tools:sample/backgrounds/scenic" />
 
-        <TextView
-            android:id="@+id/price"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:text="R$1035,00" />
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:text="Lidhult" />
+            android:background="@color/colorPrimary50"
+            android:orientation="vertical"
 
-        <TextView
-            android:id="@+id/type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            tools:ignore="SmallSp"
-            tools:text="chair" />
+            android:padding="@dimen/card_content_padding">
 
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="R$1035,00" />
 
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="Lidhult" />
+
+            <TextView
+                android:id="@+id/type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                tools:ignore="SmallSp"
+                tools:text="chair" />
+
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

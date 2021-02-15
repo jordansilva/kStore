@@ -7,12 +7,14 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.jordansilva.kstore.R
 import com.jordansilva.kstore.databinding.FragmentCartBinding
 import com.jordansilva.kstore.ui.helper.navigateTo
 import com.jordansilva.kstore.ui.model.CartViewData
 import com.jordansilva.kstore.ui.product.ProductDetailFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+
 
 /**
  * A fragment representing a list of Items.
@@ -36,6 +38,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
         viewModel.viewState.observe(viewLifecycleOwner) { updateViewState(it) }
         binding.recyclerView.adapter = listAdapter
+        binding.recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -71,7 +74,6 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         if (isEmpty && binding.viewSwitcher.currentView.id == binding.cartView.id) binding.viewSwitcher.showNext()
     }
 
-    //TODO: Move to Navigator Component or move this to the activity
     private fun onProductClicked(item: CartViewData.CartProductViewData) {
         navigateTo(ProductDetailFragment.newInstance(item.id), ProductDetailFragment.TAG)
     }

@@ -47,7 +47,7 @@ class CartListAdapter(
         private val onItemQuantityChanged: (Int, Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
-            itemView.setOnClickListener { onItemClicked(adapterPosition) }
+            binding.image.setOnClickListener { onItemClicked(adapterPosition) }
             binding.increaseQuantity.setOnClickListener { onItemQuantityChanged(adapterPosition, 1) }
             binding.reduceQuantity.setOnClickListener { onItemQuantityChanged(adapterPosition, -1) }
         }

@@ -82,39 +82,42 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/price" />
 
-        <TextView
-            android:id="@+id/overviewLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/product_information"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:name="com.jordansilva.kstore.ui.home.ItemFragment"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:nestedScrollingEnabled="true"
-            android:overScrollMode="never"
-            app:layoutManager="LinearLayoutManager"
-            tools:context=".ui.product.ProductDetailFragment"
-            tools:itemCount="50"
-            tools:listitem="@layout/item_product_information" />
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            app:cardElevation="2dp">
 
-        <!--        "info": {-->
-        <!--        "color": "white",-->
-        <!--        "material": "wood with cover"-->
-        <!--        },-->
-        <!--        "name": "Henriksdal",-->
-        <!--        "price": {-->
-        <!--        "currency": "kr",-->
-        <!--        "value": 499-->
-        <!--        },-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/overviewLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:padding="16dp"
+                    android:text="@string/product_information"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:name="com.jordansilva.kstore.ui.home.ItemFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:nestedScrollingEnabled="true"
+                    android:overScrollMode="never"
+                    app:layoutManager="LinearLayoutManager"
+                    tools:context=".ui.product.ProductDetailFragment"
+                    tools:itemCount="50"
+                    tools:listitem="@layout/item_product_information" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 
