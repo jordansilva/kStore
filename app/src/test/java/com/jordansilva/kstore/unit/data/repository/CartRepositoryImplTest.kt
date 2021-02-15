@@ -6,7 +6,7 @@ import com.jordansilva.kstore.data.repository.CartRepositoryImpl
 import com.jordansilva.kstore.data.repository.datasource.CartDataSource
 import com.jordansilva.kstore.domain.model.Product
 import com.jordansilva.kstore.domain.repository.ProductsRepository
-import com.jordansilva.kstore.helper.FakeInstances
+import com.jordansilva.kstore.helper.TestUtil
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -40,7 +40,7 @@ class CartRepositoryImplTest {
         assertThat(isAdded).isTrue()
 
         val product = productsRepository.getProduct("A")!!
-        val expectedProduct = FakeInstances.makeCartProduct(product)
+        val expectedProduct = TestUtil.makeCartProduct(product)
         assertThat(productsInCart[0]).isEqualTo(expectedProduct)
     }
 

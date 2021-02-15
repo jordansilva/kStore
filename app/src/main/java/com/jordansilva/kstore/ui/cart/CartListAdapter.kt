@@ -1,10 +1,7 @@
 package com.jordansilva.kstore.ui.cart
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +12,7 @@ import com.jordansilva.kstore.databinding.ItemCartProductCardBinding
 import com.jordansilva.kstore.ui.model.CartViewData.CartProductViewData
 
 class CartListAdapter(
-    private val onItemClicked: (CartProductViewData, View) -> Unit,
+    private val onItemClicked: (CartProductViewData) -> Unit,
     private val onItemQuantityChanged: (CartProductViewData, Int) -> Unit
 ) :
     ListAdapter<CartProductViewData, CartListAdapter.ProductViewHolder>(photoViewDataDiff) {
@@ -35,7 +32,7 @@ class CartListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val binding = ItemCartProductCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProductViewHolder(
-            binding, { position, view -> if (position >= 0) onItemClicked(getItem(position), view) },
+            binding, { position -> if (position >= 0) onItemClicked(getItem(position)) },
             { position, quantity -> if (position >= 0) onItemQuantityChanged(getItem(position), quantity) },
         )
     }
@@ -46,23 +43,19 @@ class CartListAdapter(
 
     class ProductViewHolder(
         private val binding: ItemCartProductCardBinding,
-        private val onItemClicked: (Int, View) -> Unit,
+        private val onItemClicked: (Int) -> Unit,
         private val onItemQuantityChanged: (Int, Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
-            itemView.setOnClickListener { onItemClicked(adapterPosition, binding.image) }
+            itemView.setOnClickListener { onItemClicked(adapterPosition) }
             binding.increaseQuantity.setOnClickListener { onItemQuantityChanged(adapterPosition, 1) }
             binding.reduceQuantity.setOnClickListener { onItemQuantityChanged(adapterPosition, -1) }
         }
 
-        @SuppressLint("SetTextI18n")
         fun bindView(item: CartProductViewData) {
             binding.name.text = item.name
-//            binding.type.text = item.type
             binding.quantity.text = item.quantity.toString()
             binding.price.text = item.price
-
-            ViewCompat.setTransitionName(binding.image, "transition_image_${adapterPosition}")
 
             item.image?.let { url ->
                 Glide.with(itemView)

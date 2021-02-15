@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.jordansilva.kstore.R
 import com.jordansilva.kstore.databinding.FragmentHomeBinding
-import com.jordansilva.kstore.ui.helper.FragmentTransitions
 import com.jordansilva.kstore.ui.helper.navigateTo
 import com.jordansilva.kstore.ui.model.ProductViewData
 import com.jordansilva.kstore.ui.product.ProductDetailFragment
@@ -22,7 +21,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val binding get() = _binding!!
 
     private val viewModel: HomeViewModel by viewModel()
-    private val listAdapter: HomeProductListAdapter = HomeProductListAdapter { position, view -> onProductClicked(position, view) }
+    private val listAdapter: HomeProductListAdapter = HomeProductListAdapter { position -> onProductClicked(position) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -47,15 +46,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         if (items.isEmpty() && binding.viewSwitcher.currentView.id == binding.recyclerView.id) binding.viewSwitcher.showNext()
     }
 
-    //TODO: Move to Navigator Component or move this to the activity
-    private fun onProductClicked(item: ProductViewData, view: View) {
-        val transitionName = view.transitionName
-        val fragment = ProductDetailFragment.newInstance(item, transitionName)
-        fragment.sharedElementEnterTransition = FragmentTransitions.getTransition()
-        fragment.sharedElementReturnTransition = FragmentTransitions.getTransition()
-
-        val sharedElements = listOf(Pair(view, transitionName))
-        navigateTo(fragment, ProductDetailFragment.TAG, sharedElements)
+    private fun onProductClicked(item: ProductViewData) {
+        navigateTo(ProductDetailFragment.newInstance(item.id), ProductDetailFragment.TAG)
     }
 
     companion object {

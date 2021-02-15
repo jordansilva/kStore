@@ -5,7 +5,7 @@ import com.jordansilva.kstore.domain.model.Product
 import com.jordansilva.kstore.domain.repository.ProductsRepository
 import com.jordansilva.kstore.domain.usecase.product.ListProductsUseCase
 import com.jordansilva.kstore.domain.usecase.product.ListProductsUseCase.ListProductsResult
-import com.jordansilva.kstore.helper.FakeInstances
+import com.jordansilva.kstore.helper.TestUtil
 import org.junit.Before
 import org.junit.Test
 
@@ -16,7 +16,7 @@ class ListProductsUseCaseTest {
         val list = mutableListOf<Product>()
         fun populate() {
             list.clear()
-            repeat(10) { list.add(FakeInstances.makeProduct(it.toString())) }
+            repeat(10) { list.add(TestUtil.makeProduct(it.toString())) }
         }
 
         override fun listAllProducts(): List<Product> = list

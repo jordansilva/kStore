@@ -5,7 +5,7 @@ import com.google.common.truth.Truth.assertThat
 import com.jordansilva.kstore.domain.model.Product
 import com.jordansilva.kstore.domain.usecase.product.ListProductsUseCase
 import com.jordansilva.kstore.domain.usecase.product.ListProductsUseCase.ListProductsResult
-import com.jordansilva.kstore.helper.FakeInstances
+import com.jordansilva.kstore.helper.TestUtil
 import com.jordansilva.kstore.ui.home.HomeViewModel
 import com.jordansilva.kstore.ui.model.ProductViewData
 import kotlinx.coroutines.Dispatchers
@@ -58,9 +58,9 @@ class HomeViewModelTest {
 
     private companion object {
         private val LIST_PRODUCTS: List<Product> = listOf(
-            FakeInstances.makeProduct("A"),
-            FakeInstances.makeProduct("B"),
-            FakeInstances.makeProduct("C")
+            TestUtil.makeProduct("A"),
+            TestUtil.makeProduct("B"),
+            TestUtil.makeProduct("C")
         )
 
         private val LIST_PRODUCT_VIEWDATA: List<ProductViewData> = LIST_PRODUCTS.map(ProductViewData::fromProduct)

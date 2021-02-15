@@ -2,7 +2,7 @@ package com.jordansilva.kstore.unit.domain.model
 
 import com.google.common.truth.Truth.assertThat
 import com.jordansilva.kstore.domain.model.Cart
-import com.jordansilva.kstore.helper.FakeInstances
+import com.jordansilva.kstore.helper.TestUtil
 import org.junit.Before
 import org.junit.Test
 import java.math.BigDecimal
@@ -130,10 +130,10 @@ class CartTest {
     }
 
     private companion object {
-        val PRODUCT_A = FakeInstances.makeProduct("A")
-        val PRODUCT_B = FakeInstances.makeProduct("B")
+        val PRODUCT_A = TestUtil.makeProduct("A")
+        val PRODUCT_B = TestUtil.makeProduct("B")
 
-        fun cartProductA(quantity: Int = 1) = FakeInstances.makeCartProduct(PRODUCT_A, quantity)
-        fun cartProductB(quantity: Int = 1) = FakeInstances.makeCartProduct(PRODUCT_B, quantity)
+        fun cartProductA(quantity: Int = 1) = TestUtil.makeCartProduct(PRODUCT_A, quantity)
+        fun cartProductB(quantity: Int = 1) = TestUtil.makeCartProduct(PRODUCT_B, quantity)
     }
 }

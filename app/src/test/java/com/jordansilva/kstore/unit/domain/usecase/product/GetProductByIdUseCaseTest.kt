@@ -5,7 +5,7 @@ import com.jordansilva.kstore.domain.model.Product
 import com.jordansilva.kstore.domain.repository.ProductsRepository
 import com.jordansilva.kstore.domain.usecase.product.GetProductByIdUseCase
 import com.jordansilva.kstore.domain.usecase.product.GetProductByIdUseCase.GetProductByIdResult
-import com.jordansilva.kstore.helper.FakeInstances
+import com.jordansilva.kstore.helper.TestUtil
 import org.junit.Before
 import org.junit.Test
 
@@ -39,6 +39,6 @@ class GetProductByIdUseCaseTest {
     }
 
     private companion object {
-        val VALID_PRODUCT = FakeInstances.makeProduct("A")
+        val VALID_PRODUCT = TestUtil.makeProduct("A")
     }
 }

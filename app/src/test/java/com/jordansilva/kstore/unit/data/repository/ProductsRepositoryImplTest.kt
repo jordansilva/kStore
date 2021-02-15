@@ -5,7 +5,7 @@ import com.jordansilva.kstore.data.repository.ProductsLocalDataSource
 import com.jordansilva.kstore.data.repository.ProductsRepositoryImpl
 import com.jordansilva.kstore.data.repository.datasource.ProductsRemoteDataSource
 import com.jordansilva.kstore.domain.model.Product
-import com.jordansilva.kstore.helper.FakeInstances
+import com.jordansilva.kstore.helper.TestUtil
 import org.json.JSONArray
 import org.junit.Before
 import org.junit.Test
@@ -21,7 +21,9 @@ class ProductsRepositoryImplTest {
     fun setUp() {
         localDataSource = object : ProductsLocalDataSource {
             override fun listProducts(): List<Product> = listOf(PRODUCT_A)
-            override fun getProductById(id: String): Product = FakeInstances.makeProduct(id)
+            override fun getProductById(id: String): Product = TestUtil.makeProduct(id)
+            override fun saveProduct(product: Product): Boolean = true
+            override fun removeProduct(product: Product): Boolean = true
         }
         remoteDataSource = object : ProductsRemoteDataSource {
             override fun fetchProducts(): JSONArray = JSONArray(arrayOf(PRODUCT_A))
@@ -43,6 +45,6 @@ class ProductsRepositoryImplTest {
     }
 
     private companion object {
-        private val PRODUCT_A = FakeInstances.makeProduct("A")
+        private val PRODUCT_A = TestUtil.makeProduct("A")
     }
 }

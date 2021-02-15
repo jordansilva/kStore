@@ -5,16 +5,11 @@
     <string name="product_added_to_cart">Product added to your shopping cart!</string>
     <string name="error_oops_try_again">Oops! Something wrong happened. Please try again later.</string>
     <string name="cart">Cart</string>
-    <string name="title_product_detail">Product Detail</string>
-    <string name="title_home">Home</string>
     <string name="product_price">Price</string>
     <string name="product_information">Information</string>
     <string name="product_image">Image of the product</string>
     <string name="best_furniture">Best Furniture</string>
     <string name="perfect_choice">Perfect choice!</string>
-    <string name="your_cart">Your Cart</string>
-    <string name="quantity_minus">-</string>
-    <string name="quantity_plus">+</string>
     <string name="total">Total</string>
     <string name="empty_cart">Your cart is empty</string>
     <string name="empty_list">No products found!</string>

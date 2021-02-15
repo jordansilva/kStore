@@ -14,9 +14,6 @@ class ProductDetailViewModel(
     private val addProductToCartUseCase: AddProductToCartUseCase
 ) : BaseViewModel() {
 
-    private val _loading = MutableLiveData(true)
-    val loading: LiveData<Boolean> = _loading
-
     private val _product = MutableLiveData<ProductDetailViewState>()
     val product: LiveData<ProductDetailViewState> = _product
 
@@ -26,7 +23,7 @@ class ProductDetailViewModel(
                 is GetProductByIdResult.Found -> handleProductFound(result.data)
                 is GetProductByIdResult.NotFound -> handleProductNotFound()
             }
-        }.invokeOnCompletion { _loading.postValue(false) }
+        }
     }
 
     fun addProductToBasket(id: String) {

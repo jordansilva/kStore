@@ -1,9 +1,7 @@
 package com.jordansilva.kstore.ui.home
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.jordansilva.kstore.databinding.ItemProductCardBinding
 import com.jordansilva.kstore.ui.model.ProductViewData
 
-class HomeProductListAdapter(private val onItemClicked: (ProductViewData, View) -> Unit) :
+class HomeProductListAdapter(private val onItemClicked: (ProductViewData) -> Unit) :
     ListAdapter<ProductViewData, HomeProductListAdapter.ProductViewHolder>(photoViewDataDiff) {
 
     private companion object {
@@ -30,23 +28,22 @@ class HomeProductListAdapter(private val onItemClicked: (ProductViewData, View) 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val binding = ItemProductCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ProductViewHolder(binding) { position, view -> onItemClicked(getItem(position), view) }
+        return ProductViewHolder(binding) { position -> onItemClicked(getItem(position)) }
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.bindView(getItem(position))
     }
 
-    class ProductViewHolder(private val binding: ItemProductCardBinding, private val onItemClicked: (Int, View) -> Unit) : RecyclerView.ViewHolder(binding.root) {
+    class ProductViewHolder(private val binding: ItemProductCardBinding, private val onItemClicked: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
         init {
-            itemView.setOnClickListener { onItemClicked(adapterPosition, binding.image) }
+            itemView.setOnClickListener { onItemClicked(adapterPosition) }
         }
 
         fun bindView(item: ProductViewData) {
             binding.name.text = item.name
             binding.type.text = item.type
             binding.price.text = item.price
-            ViewCompat.setTransitionName(binding.image, "transition_image_${adapterPosition}")
 
             item.image?.let { url ->
                 Glide.with(itemView)

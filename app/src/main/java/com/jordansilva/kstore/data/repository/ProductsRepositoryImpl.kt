@@ -11,16 +11,13 @@ class ProductsRepositoryImpl(
     private val remoteDataSource: ProductsRemoteDataSource
 ) : ProductsRepository {
 
-    //TODO: Stop parsing every time
     override fun listAllProducts(): List<Product> {
         val result = remoteDataSource.fetchProducts()
-        return result.map(ProductMapper::fromJsonObject)
+        return result.map(ProductMapper::fromJsonObject).onEach(localDataSource::saveProduct)
     }
 
-    //TODO: Fix this
     override fun getProduct(id: String): Product? {
-//        return localDataSource.getProductById(id)
-        return listAllProducts().firstOrNull { it.id == id }
+        return localDataSource.getProductById(id)
     }
 }
 

@@ -1,40 +1,64 @@
 # kStore
-Android Shoppable App
-Your assignment is to create a small scale shopping app, please use Kotlin!
+A small scale shopping app written in Kotlin!
 
-### Goal
-✅ The app should be able to present a range of products and allow the user to add them to a Cart.
-
-### Data
-We have attached a products.json file as input.
-✅ The file contains a list of products of two types, "chair" and "couch", and additional data like picture, name, price etc.
-
-## Screens
-
-### List of Products
-✅ Use the product data to visualize the products in a user friendly way.
-
-### Product Detail
-✅ Notice there are differences in what "info" is provided for a "chair" vs a "couch".
-✅ We still want this data to be available to the end user, ex. a "chair" has "material" and a "coach" has "numberOfSeats".
-
-### Cart
-    ✅ - Products shall be possible to add to a Cart (a shopping list).
-    - The Cart should display all added products.
-      - Each product should display it's price but the cart should also display the total price for all products.
-    - User's change their minds, please add support to remove a product from the Cart :)
-
-Have fun and enjoy!
-
-
----------
-
-### Assumptions
-- All products retrieved will have the same currency, otherwise the app should have a way to convert different currencies to a selected one to present in the cart.
-
-- Create Shopping Cart Screen
-- Fix Unit Tests
-- Implement Unit Tests VM and missing classes
+This app presents a small of products on the main screen, a product detail page when you click on one of the items from the main screen and the shopping cart screen. The project was developed using Kotlin, Android Jetpack Components (LiveData, ViewModel), Kotlin Coroutines and Flow.
+In this project, I tried to apply concepts from Clean Architecture to build an easy and testable project. To speed up the implementation I added some libraries in the project - i.e., Koin, Kotlin Coroutines.
+     
+Pitfalls & Known bugs
+--------
+Due to the constraint of work only 2 days on this project, I have to do some considerations of what I left out:
+- Tests are not covering all View Models and Views. To compensate and mitigate possible issues, I implemented two UI tests end to end. 
+- Improve overall the design.
+- All products retrieved should have the same currency right now, otherwise it will sum different prices in currencies.
+- Implement Unit Tests for View Models and missing classes.
+- Implement tests using different files as input. I haven't prioritize that so far.  
 - Implement UI Tests
 - Improve Design
-- Write README.md
+
+Improvements & next steps
+--------
+- Increase the test coverage and refactor the tests to follow some standard (which it's kinda messy now)
+- Remove android dependencies (e.g., implementing better interfaces) to make the tests less dependent on Android architecture.  
+
+#### Project structure
+--------
+- *data* - is where we keep the repository and repository model classes implementations. A repository is where the app can fetch local or remote data.
+- *di* - we can find the **module** setup used by Koin.
+- *domain* - is the folder where you find the UseCases, Domain Models and Repository interfaces. In this layer you should build your business logic and handle business errors.
+- *ui* - is the folder where you can find the Activities, Fragments, ViewModels and Adapters.
+- *util* - as the name said, is the place where we can add classes and helpers to be used throughout the project. In this folder, you find Constants, Extensions, Helpers.
+
+#### Architecture
+---
+I applied MVVM architecture and applied concepts from Clean Architecture, adding an intermediate UseCase between the View Model and Data Layer. Despite this project being small, I applied some of these concepts to make it easily scalable.  
+Also, another good practice is by caching the API responses locally and using both remote and local repository (keeping the local repository updated), so I just stored the data in local variables in a singleton data source (I could store on a database, but I didn't have time to do it).   
+
+#### Tests
+---
+I have implemented some tests for the use cases, Cart class, 1 VM, and some not very useful for repository. After all, I did not implement as many tests as I would like to.
+I tried to use fake implementation instead mocking and started applying TDD, but at the 2nd day things got out of control, so... first class, after tests. :(
+
+To execute the UI tests, you should start an android emulator with internet connection and run the command below inside the root project folder. :) 
+```bash
+./gradlew connectedCheck
+```
+
+To execute the unit tests, you should run the command below:
+```bash
+./gradlew test
+```
+
+- Libraries
+Some of the libraries that were used in this project aim to facilitate and speed-up the implementation of the test. 
+- **Koin.io** - is a *lightweight dependency injection (DI) framework* for Kotlin. It is being used in the project to simplify the DI for ViewModels/Repositories/Tests.
+- **Kotlin Coroutines** - is employed in this project for asynchronous programming and running process in the background thread.
+- **Mockito** - is a mocking framework for and it is being widely used through the unit tests to provide mocks and stub methods.
+- **Lottie** - is a library to parse Adobe After Effects animations and renders it natively. It was used to display empty state animations.
+
+Most of the libraries are not necessary for this small project, however, their use reduces boilerplate from our code as well as speed up the development. 
+For instance, by using Koin in this project, we could avoid ViewModel factory classes also helped us with dependency injections by writing a few lines of code.
+
+Compatibility
+--------
+*minSdkVersion* 21 (Lollipop - Android 5.0)  
+*targetSdkVersion* 30 (Android 11)

@@ -5,9 +5,7 @@ import com.jordansilva.kstore.domain.repository.CartRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 open class FakeCartRepository : CartRepository {
 
@@ -28,7 +26,7 @@ open class FakeCartRepository : CartRepository {
         products[id] = itemQuantity + 1
         quantity.tryEmit(products.values.sum())
 
-        cart.add(FakeInstances.makeProduct(id))
+        cart.add(TestUtil.makeProduct(id))
         cartFlow.tryEmit(cart)
 
         return true

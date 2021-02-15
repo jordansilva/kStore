@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.jordansilva.kstore.R
 import com.jordansilva.kstore.databinding.FragmentCartBinding
+import com.jordansilva.kstore.ui.helper.navigateTo
 import com.jordansilva.kstore.ui.model.CartViewData
+import com.jordansilva.kstore.ui.product.ProductDetailFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
@@ -50,34 +52,28 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             is CartViewState.Updated -> updateCart(viewState.cart)
             is CartViewState.EmptyCart -> emptyCart()
         }
-
-        updateEmptyView()
     }
 
     private fun updateCart(cart: CartViewData) {
         listAdapter.submitList(cart.products)
         binding.total.text = cart.totalPrice
+        updateEmptyView()
     }
 
     private fun emptyCart() {
         listAdapter.submitList(emptyList())
         binding.total.text = ""
+        updateEmptyView(true)
     }
 
-    private fun updateEmptyView() {
-        if (listAdapter.itemCount > 0 && binding.viewSwitcher.currentView.id != binding.cartView.id) binding.viewSwitcher.showNext()
-        if (listAdapter.itemCount == 0 && binding.viewSwitcher.currentView.id == binding.cartView.id) binding.viewSwitcher.showNext()
+    private fun updateEmptyView(isEmpty: Boolean = false) {
+        if (!isEmpty && binding.viewSwitcher.currentView.id != binding.cartView.id) binding.viewSwitcher.showNext()
+        if (isEmpty && binding.viewSwitcher.currentView.id == binding.cartView.id) binding.viewSwitcher.showNext()
     }
 
     //TODO: Move to Navigator Component or move this to the activity
-    private fun onProductClicked(item: CartViewData.CartProductViewData, view: View) {
-//        val transitionName = view.transitionName
-//        val fragment =
-//        fragment.sharedElementEnterTransition = FragmentTransitions.getTransition()
-//        fragment.sharedElementReturnTransition = FragmentTransitions.getTransition()
-//
-//        val sharedElements = listOf(Pair(view, transitionName))
-//        navigateTo(ProductDetailFragment.newInstance(item), ProductDetailFragment.TAG, sharedElements)
+    private fun onProductClicked(item: CartViewData.CartProductViewData) {
+        navigateTo(ProductDetailFragment.newInstance(item.id), ProductDetailFragment.TAG)
     }
 
     private fun onProductQuantityChanged(item: CartViewData.CartProductViewData, quantity: Int) {

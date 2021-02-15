@@ -19,26 +19,21 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
 
     private val viewModel: ProductDetailViewModel by viewModel()
-    private lateinit var product: ProductViewData
+    private lateinit var productId: String
 
     private var _binding: FragmentProductDetailBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentProductDetailBinding.inflate(inflater, container, false)
-        arguments?.let {
-            product = it.getParcelable(ARG_ITEM)!!
-            binding.image.transitionName = it.getString(ARG_TRANSITION_NAME)
-        }
+        arguments?.let { productId = it.getString(ARG_ITEM)!! }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.product.observe(viewLifecycleOwner, { handleViewState(it) })
-        viewModel.getProductById(product.id)
-
-        loadProductDetails()
+        viewModel.getProductById(productId)
     }
 
     override fun onDestroyView() {
@@ -49,8 +44,7 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
     private fun handleViewState(viewState: ProductDetailViewState) {
         when (viewState) {
             is ProductDetailViewState.ProductDetail -> {
-                product = viewState.data
-                loadProductDetails()
+                loadProductDetails(viewState.data)
             }
             ProductDetailViewState.NotFound -> showToast(R.string.product_not_found)
             ProductDetailViewState.AddedToCart -> showToast(R.string.product_added_to_cart)
@@ -58,7 +52,7 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
         }
     }
 
-    private fun loadProductDetails() {
+    private fun loadProductDetails(product: ProductViewData) {
         binding.apply {
             name.text = product.name
             type.text = product.type
@@ -84,12 +78,10 @@ class ProductDetailFragment : Fragment(R.layout.fragment_product_detail) {
         val TAG: String = ProductDetailFragment::class.java.simpleName
 
         private const val ARG_ITEM = "product_item"
-        private const val ARG_TRANSITION_NAME = "transition_name"
 
-        fun newInstance(item: ProductViewData, transitionName: String) = ProductDetailFragment().apply {
+        fun newInstance(itemId: String) = ProductDetailFragment().apply {
             arguments = Bundle().apply {
-                putString(ARG_TRANSITION_NAME, transitionName)
-                putParcelable(ARG_ITEM, item)
+                putString(ARG_ITEM, itemId)
             }
         }
     }
