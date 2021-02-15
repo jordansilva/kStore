@@ -16,7 +16,7 @@ class GetProductByIdUseCaseTest {
     @Before
     fun setUp() {
         val fakeRepository = object : ProductsRepository {
-            override fun listAllProducts(): List<Product> = TODO()
+            override suspend fun listAllProducts(): List<Product> = TODO()
             override fun getProduct(id: String): Product? = if (id == VALID_PRODUCT.id) VALID_PRODUCT else null
         }
 

@@ -6,6 +6,7 @@ import com.jordansilva.kstore.data.repository.ProductsRepositoryImpl
 import com.jordansilva.kstore.data.repository.datasource.ProductsRemoteDataSource
 import com.jordansilva.kstore.domain.model.Product
 import com.jordansilva.kstore.helper.TestUtil
+import kotlinx.coroutines.test.runBlockingTest
 import org.json.JSONArray
 import org.junit.Before
 import org.junit.Test
@@ -26,13 +27,13 @@ class ProductsRepositoryImplTest {
             override fun removeProduct(product: Product): Boolean = true
         }
         remoteDataSource = object : ProductsRemoteDataSource {
-            override fun fetchProducts(): JSONArray = JSONArray(arrayOf(PRODUCT_A))
+            override suspend fun fetchProducts(): JSONArray = JSONArray(arrayOf(PRODUCT_A))
         }
         repository = ProductsRepositoryImpl(localDataSource, remoteDataSource)
     }
 
     @Test
-    fun listAllProducts() {
+    fun listAllProducts() = runBlockingTest {
         val products = repository.listAllProducts()
         assertThat(products).hasSize(1)
     }

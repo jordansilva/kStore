@@ -5,7 +5,7 @@ import com.jordansilva.kstore.domain.repository.ProductsRepository
 
 class ListProductsUseCase(private val repository: ProductsRepository) {
 
-    fun execute(): ListProductsResult {
+    suspend fun execute(): ListProductsResult {
         return try {
             val products = repository.listAllProducts()
             ListProductsResult.Products(products)

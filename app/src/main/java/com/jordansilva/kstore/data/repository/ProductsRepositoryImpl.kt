@@ -11,7 +11,7 @@ class ProductsRepositoryImpl(
     private val remoteDataSource: ProductsRemoteDataSource
 ) : ProductsRepository {
 
-    override fun listAllProducts(): List<Product> {
+    override suspend fun listAllProducts(): List<Product> {
         val result = remoteDataSource.fetchProducts()
         return result.map(ProductMapper::fromJsonObject).onEach(localDataSource::saveProduct)
     }

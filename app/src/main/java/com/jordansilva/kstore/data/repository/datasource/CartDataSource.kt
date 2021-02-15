@@ -5,7 +5,7 @@ import com.jordansilva.kstore.domain.model.Product
 import kotlinx.coroutines.flow.SharedFlow
 
 interface CartDataSource {
-    fun getCart(): Cart
+    fun newCart(): Cart
     fun observeCart(): SharedFlow<Cart>
     fun addProduct(product: Product): Boolean
     fun removeProductById(id: String): Boolean

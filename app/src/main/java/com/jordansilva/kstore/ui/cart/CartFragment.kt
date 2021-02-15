@@ -13,7 +13,7 @@ import com.jordansilva.kstore.databinding.FragmentCartBinding
 import com.jordansilva.kstore.ui.helper.navigateTo
 import com.jordansilva.kstore.ui.model.CartViewData
 import com.jordansilva.kstore.ui.product.ProductDetailFragment
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
@@ -24,7 +24,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: CartViewModel by sharedViewModel()
+    private val viewModel: CartViewModel by viewModel()
     private val listAdapter: CartListAdapter = CartListAdapter(this::onProductClicked, this::onProductQuantityChanged)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

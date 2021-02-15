@@ -11,17 +11,16 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import com.jordansilva.kstore.R
 import com.jordansilva.kstore.ui.helper.navigateTo
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * A fragment representing a list of Items.
  */
 @Suppress("unused")
 class CartBadgeFragment : Fragment() {
-    private val viewModel: CartViewModel by sharedViewModel()
+    private val viewModel: CartViewModel by viewModel()
     private var itemBadge: TextView? = null
     private val observer: Observer<in CartViewState> = Observer { handleViewState(it) }
 

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 
 class CartDataSourceImpl : CartDataSource {
 
-    private val cart: Cart = Cart()
+    private var cart: Cart = Cart()
     private val _cartFlow = MutableSharedFlow<Cart>(1)
 
     init {
@@ -17,7 +17,10 @@ class CartDataSourceImpl : CartDataSource {
     }
 
     override fun observeCart(): SharedFlow<Cart> = _cartFlow.asSharedFlow()
-    override fun getCart(): Cart {
+
+    override fun newCart(): Cart {
+        cart = Cart()
+        _cartFlow.tryEmit(cart)
         return cart
     }
 

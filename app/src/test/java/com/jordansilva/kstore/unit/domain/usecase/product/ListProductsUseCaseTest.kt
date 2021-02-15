@@ -6,6 +6,7 @@ import com.jordansilva.kstore.domain.repository.ProductsRepository
 import com.jordansilva.kstore.domain.usecase.product.ListProductsUseCase
 import com.jordansilva.kstore.domain.usecase.product.ListProductsUseCase.ListProductsResult
 import com.jordansilva.kstore.helper.TestUtil
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
 
@@ -19,7 +20,7 @@ class ListProductsUseCaseTest {
             repeat(10) { list.add(TestUtil.makeProduct(it.toString())) }
         }
 
-        override fun listAllProducts(): List<Product> = list
+        override suspend fun listAllProducts(): List<Product> = list
         override fun getProduct(id: String): Product = TODO("Not yet implemented")
     }
 
@@ -29,7 +30,7 @@ class ListProductsUseCaseTest {
     }
 
     @Test
-    fun `given the database has no product, when I retrieve the list of products, then it should return an empty list of products`() {
+    fun `given the database has no product, when I retrieve the list of products, then it should return an empty list of products`() = runBlockingTest {
         val result = sut.execute()
         assertThat(result).isInstanceOf(ListProductsResult.Products::class.java)
         result as ListProductsResult.Products
@@ -38,7 +39,7 @@ class ListProductsUseCaseTest {
     }
 
     @Test
-    fun `given the database was populated with products, when I retrieve the list of products, then it should return a non-empty list with the respective products inside`() {
+    fun `given the database was populated with products, when I retrieve the list of products, then it should return a non-empty list with the respective products inside`() = runBlockingTest {
         val result = sut.execute()
         fakeRepository.populate()
         assertThat(result).isInstanceOf(ListProductsResult.Products::class.java)

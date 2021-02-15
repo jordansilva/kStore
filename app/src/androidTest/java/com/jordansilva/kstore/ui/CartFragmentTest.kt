@@ -1,31 +1,51 @@
 package com.jordansilva.kstore.ui
 
+import android.app.Activity
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.test.rule.ActivityTestRule
 import com.jordansilva.kstore.R
+import com.jordansilva.kstore.data.repository.datasource.CartDataSource
 import com.jordansilva.kstore.util.RecyclerViewMatcher
 import com.jordansilva.kstore.util.onViewDisplayed
 import com.jordansilva.kstore.util.onViewDisplayedWithText
-import org.hamcrest.CoreMatchers.not
+import org.hamcrest.CoreMatchers.anyOf
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.module.Module
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class CartFragmentTest {
+class CartFragmentTest : KoinTest {
 
     @Rule
     @JvmField
-    var activityTestRule = ActivityTestRule(MainActivity::class.java)
+    var activityTestRule = ActivityScenarioRule(MainActivity::class.java)
+    private var activity: Activity? = null
+
+    private val cartDataSource: CartDataSource by inject()
+
+    @Before
+    fun setUp() {
+        activityTestRule.scenario.onActivity { activity = it }
+    }
+
+    @After
+    fun tearDown() {
+        activity = null
+        cartDataSource.newCart()
+    }
 
     @Test
     fun givenEmptyCart_whenAddToCartClicked_andNavigateToCartPage_thenItDisplayProducts() {
@@ -35,10 +55,8 @@ class CartFragmentTest {
         onViewDisplayed(R.id.shopping_cart).perform(click())
         onViewDisplayed(R.id.cartView).check(matches(isDisplayed()))
 
-        onRecyclerViewItem(0, R.id.name).check(matches(withText(PRODUCT_NAME)))
-        onRecyclerViewItem(0, R.id.quantity).check(matches(withText(PRODUCT_QUANTITY.toString())))
-        onRecyclerViewItem(1, R.id.name).check(matches(withText(ANOTHER_PRODUCT_NAME)))
-        onRecyclerViewItem(1, R.id.quantity).check(matches(withText(ANOTHER_PRODUCT_QUANTITY.toString())))
+        onRecyclerViewItem(0, R.id.name).check(matches(anyOf(withText(PRODUCT_NAME), withText(ANOTHER_PRODUCT_NAME))))
+        onRecyclerViewItem(1, R.id.name).check(matches(anyOf(withText(PRODUCT_NAME), withText(ANOTHER_PRODUCT_NAME))))
     }
 
     @Test
@@ -62,11 +80,7 @@ class CartFragmentTest {
 
     private fun openProductAndAddToBasket(productName: String, quantity: Int = 1) {
         onViewDisplayedWithText(productName).perform(click())
-        repeat(quantity) {
-            onViewDisplayed(R.id.addToBasket).perform(click())
-            onView(withText(R.string.product_added_to_cart))
-                .inRoot(withDecorView(not(activityTestRule.activity.window.decorView))).check(matches(isDisplayed()));
-        }
+        repeat(quantity) { onViewDisplayed(R.id.addToBasket).perform(click()) }
         Espresso.pressBack()
     }
 

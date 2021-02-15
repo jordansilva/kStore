@@ -23,7 +23,7 @@ class CartRepositoryImplTest {
     fun setUp() {
         cartDataSource = CartDataSourceImpl()
         productsRepository = object : ProductsRepository {
-            override fun listAllProducts(): List<Product> = TODO("Not yet implemented")
+            override suspend fun listAllProducts(): List<Product> = TODO("Not yet implemented")
             override fun getProduct(id: String): Product =
                 Product(id, "Product $id", "Category $id", Product.Price(BigDecimal(0.0), "brl"))
         }
