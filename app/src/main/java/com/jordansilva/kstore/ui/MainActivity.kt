@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.jordansilva.kstore.R
 import com.jordansilva.kstore.databinding.ActivityMainBinding
 import com.jordansilva.kstore.ui.home.HomeFragment
+import com.jordansilva.kstore.ui.home.HomeScreen
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,21 +16,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         initActionBar()
 
+
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, HomeFragment.newInstance())
-                .commitNow()
+            binding.composeView.setContent {
+                HomeScreen()
+            }
+//            supportFragmentManager.beginTransaction()
+//                .replace(R.id.container, HomeFragment.newInstance())
+//                .commitNow()
         }
-        /**
-        val navController = findNavController(R.id.nav_host_fragment)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
-         */
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

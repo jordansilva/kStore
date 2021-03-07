@@ -7,7 +7,6 @@ import com.jordansilva.kstore.domain.usecase.cart.AddProductToCartUseCase
 import com.jordansilva.kstore.domain.usecase.product.GetProductByIdUseCase
 import com.jordansilva.kstore.domain.usecase.product.GetProductByIdUseCase.GetProductByIdResult
 import com.jordansilva.kstore.ui.BaseViewModel
-import com.jordansilva.kstore.ui.model.ProductViewData
 
 class ProductDetailViewModel(
     private val getProductByIdUseCase: GetProductByIdUseCase,

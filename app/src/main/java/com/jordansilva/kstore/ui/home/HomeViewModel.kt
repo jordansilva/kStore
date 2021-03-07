@@ -6,7 +6,7 @@ import com.jordansilva.kstore.domain.model.Product
 import com.jordansilva.kstore.domain.usecase.product.ListProductsUseCase
 import com.jordansilva.kstore.domain.usecase.product.ListProductsUseCase.ListProductsResult
 import com.jordansilva.kstore.ui.BaseViewModel
-import com.jordansilva.kstore.ui.model.ProductViewData
+import com.jordansilva.kstore.ui.product.ProductViewData
 
 class HomeViewModel(private val listProductsUseCase: ListProductsUseCase) : BaseViewModel() {
 

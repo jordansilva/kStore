@@ -1,4 +1,4 @@
-package com.jordansilva.kstore.ui.model
+package com.jordansilva.kstore.ui.product
 
 import android.os.Parcelable
 import com.jordansilva.kstore.domain.model.Product
@@ -32,8 +32,5 @@ data class ProductViewData(
                 info = source.info.toList()
             )
         }
-
-
     }
-
 }

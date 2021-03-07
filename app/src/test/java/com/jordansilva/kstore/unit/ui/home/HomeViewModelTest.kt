@@ -7,7 +7,7 @@ import com.jordansilva.kstore.domain.usecase.product.ListProductsUseCase
 import com.jordansilva.kstore.domain.usecase.product.ListProductsUseCase.ListProductsResult
 import com.jordansilva.kstore.helper.TestUtil
 import com.jordansilva.kstore.ui.home.HomeViewModel
-import com.jordansilva.kstore.ui.model.ProductViewData
+import com.jordansilva.kstore.ui.product.ProductViewData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain

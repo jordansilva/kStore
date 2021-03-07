@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
 import com.jordansilva.kstore.R
 import com.jordansilva.kstore.databinding.FragmentProductDetailBinding
-import com.jordansilva.kstore.ui.model.ProductViewData
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * A fragment representing a list of Items.

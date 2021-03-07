@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.jordansilva.kstore.databinding.ItemProductCardBinding
-import com.jordansilva.kstore.ui.model.ProductViewData
+import com.jordansilva.kstore.ui.product.ProductViewData
 
 class HomeProductListAdapter(private val onItemClicked: (ProductViewData) -> Unit) :
     ListAdapter<ProductViewData, HomeProductListAdapter.ProductViewHolder>(photoViewDataDiff) {

@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import com.jordansilva.kstore.R
 import com.jordansilva.kstore.databinding.FragmentHomeBinding
 import com.jordansilva.kstore.ui.helper.navigateTo
-import com.jordansilva.kstore.ui.model.ProductViewData
+import com.jordansilva.kstore.ui.product.ProductViewData
 import com.jordansilva.kstore.ui.product.ProductDetailFragment
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * A fragment representing a list of Items.
